@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>panbuilt - we've designed a few things</title>
+    
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Color System: Hip, Muted Tones (Slate Blue, Deep Indigo, Muted Lavender, Warm Taupe, Soft Clay) */
+        :root {
+            /* Palette Tokens */
+            --c-deep-indigo: #1e1b2e;
+            --c-slate-blue: #3b4252;
+            --c-muted-lavender: #887898;
+            --c-warm-taupe: #8c7a6b;
+            --c-soft-clay: #b87d7b;
+            --c-clay-highlight: #d4a39b;
+
+            /* Glass and Typography */
+            --bg-dark: #12111a;
+            --card-glass-bg: rgba(23, 21, 33, 0.45);
+            --card-glass-border: rgba(255, 255, 255, 0.12);
+            --card-shadow: 0 30px 60px -12px rgba(10, 9, 16, 0.5), 0 0 1px rgba(255, 255, 255, 0.2) inset;
+            
+            --text-primary: #f5f3f7;
+            --text-secondary: #c2bdcb;
+            --text-muted: #8d859a;
+            --badge-bg: rgba(184, 125, 123, 0.15);
+            --badge-border: rgba(212, 163, 155, 0.3);
+            --badge-text: #e6beba;
+            --pulse-dot: #e6beba;
+        }
+
+        /* Reset & Layout Essentials */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* -------------------------------------------------------------
+           Dynamic Multi-Layered Animated Background Canvas
+        ------------------------------------------------------------- */
+        .gradient-background {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-color: var(--c-deep-indigo);
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Fluid Blobs using Conic and Radial Gradients */
+        .gradient-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.85;
+            mix-blend-mode: screen;
+            will-change: transform;
+        }
+
+        .blob-1 {
+            top: -15%;
+            left: -10%;
+            width: 75vw;
+            height: 75vw;
+            max-width: 800px;
+            max-height: 800px;
+            background: radial-gradient(circle at center, var(--c-slate-blue) 0%, var(--c-deep-indigo) 70%);
+            animation: float-1 22s ease-in-out infinite alternate;
+        }
+
+        .blob-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 80vw;
+            height: 80vw;
+            max-width: 850px;
+            max-height: 850px;
+            background: radial-gradient(circle at center, var(--c-warm-taupe) 0%, var(--c-muted-lavender) 60%, transparent 100%);
+            animation: float-2 28s ease-in-out infinite alternate;
+        }
+
+        .blob-3 {
+            top: 30%;
+            right: 15%;
+            width: 50vw;
+            height: 50vw;
+            max-width: 600px;
+            max-height: 600px;
+            background: radial-gradient(circle at center, var(--c-soft-clay) 0%, var(--c-muted-lavender) 50%, transparent 100%);
+            animation: float-3 18s ease-in-out infinite alternate;
+        }
+
+        .blob-4 {
+            bottom: 10%;
+            left: 10%;
+            width: 45vw;
+            height: 45vw;
+            max-width: 500px;
+            max-height: 500px;
+            background: conic-gradient(from 180deg at 50% 50%, var(--c-warm-taupe) 0deg, var(--c-slate-blue) 120deg, var(--c-clay-highlight) 240deg, var(--c-warm-taupe) 360deg);
+            opacity: 0.45;
+            animation: float-4 25s linear infinite;
+        }
+
+        /* Subtle Noise Overlay SVG Pattern for Texture */
+        .noise-texture {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.045;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Fluid Animation Keyframes */
+        @keyframes float-1 {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(8%, 12%) scale(1.1) rotate(45deg); }
+            100% { transform: translate(-5%, 8%) scale(0.95) rotate(-20deg); }
+        }
+
+        @keyframes float-2 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-10%, -15%) scale(1.15); }
+            100% { transform: translate(6%, -5%) scale(0.9); }
+        }
+
+        @keyframes float-3 {
+            0% { transform: translate(0, 0) scale(0.9); }
+            50% { transform: translate(-15%, 10%) scale(1.1); }
+            100% { transform: translate(10%, -12%) scale(1); }
+        }
+
+        @keyframes float-4 {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* -------------------------------------------------------------
+           Main Container & Typography
+        ------------------------------------------------------------- */
+        .main-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 660px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: var(--card-glass-bg);
+            backdrop-filter: blur(36px);
+            -webkit-backdrop-filter: blur(36px);
+            border: 1px solid var(--card-glass-border);
+            border-radius: 28px;
+            padding: 3.5rem 3.25rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+        }
+
+        @media (max-width: 640px) {
+            .glass-card {
+                padding: 2.25rem 1.75rem;
+                border-radius: 22px;
+            }
+        }
+
+        /* Brand Emblem */
+        .brand-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .brand-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--text-primary);
+        }
+
+        /* Headline & Clamp Typography */
+        .hero-title {
+            font-size: clamp(2.2rem, 5.2vw, 3.4rem);
+            font-weight: 700;
+            line-height: 1.12;
+            letter-spacing: -0.035em;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .title-gradient {
+            background: linear-gradient(135deg, #ffffff 30%, var(--c-clay-highlight) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Body Typography */
+        .hero-body {
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+            font-weight: 400;
+            line-height: 1.68;
+            color: var(--text-secondary);
+            margin-bottom: 2.75rem;
+            letter-spacing: -0.012em;
+        }
+
+        /* Status Badge & Email Footer */
+        .footer-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.45rem 0.95rem;
+            border-radius: 9999px;
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            font-size: 0.825rem;
+            font-weight: 500;
+            color: var(--badge-text);
+            letter-spacing: 0.015em;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--pulse-dot);
+            box-shadow: 0 0 10px var(--pulse-dot);
+            animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.85); }
+        }
+
+        .contact-link {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.25 ease;
+        }
+
+        .contact-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: rgba(226, 218, 235, 0.3);
+            transition: background-color 0.25s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--text-primary);
+        }
+
+        .contact-link:hover::after {
+            background-color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Animated Gradient Background -->
+    <div class="gradient-background" aria-hidden="true">
+        <div class="gradient-blob blob-1"></div>
+        <div class="gradient-blob blob-2"></div>
+        <div class="gradient-blob blob-3"></div>
+        <div class="gradient-blob blob-4"></div>
+    </div>
+
+    <!-- Subtle Grain Noise Texture -->
+    <div class="noise-texture" aria-hidden="true"></div>
+
+    <!-- Main Content Container Card -->
+    <main class="main-wrapper">
+        <div class="glass-card">
+            
+            <!-- Brand Icon 
+            <header class="brand-header">
+                <div class="brand-icon" aria-label="Aura Logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                        <polyline points="2 17 12 22 22 17"/>
+                        <polyline points="2 12 12 17 22 12"/>
+                    </svg>
+                </div>
+            </header>
+				-->
+            <!-- Headline Text -->
+            <h1 class="hero-title">
+                panbuilt
+            </h1>
+
+            <!-- Body Text -->
+            <p class="hero-body">
+                So glad you stopped by!  <br>Too bad tho - nothing to see here :/ 
+            </p>
+
+            <!-- Status & Footer Link 
+            <footer class="footer-action">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>Private Beta &bull; Launching Soon</span>
+                </div>
+
+                <a href="mailto:hello@auraflow.io" class="contact-link">
+                    hello@auraflow.io &rarr;
+                </a>
+            </footer>-->
+
+        </div>
+    </main>
+
+</body>
+</html>
